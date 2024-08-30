@@ -31,10 +31,10 @@
 		</plugins>
 	</build>
   <distributionManagement>
-        <repository>
-            <id>matson-matson-central</id>
-            <name>matson-matson-central</name>
-            <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/matson-central/</url>
-        </repository>
-    </distributionManagement>
+  <repository>
+    <id>matson-matson-central</id>
+    <name>matson-matson-central</name>
+    <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/matson-central/</url>
+  </repository>
+</distributionManagement>
 </project>

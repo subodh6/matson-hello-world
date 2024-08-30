@@ -16,7 +16,14 @@
             <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
         </server>
     </servers>
-
+    <mirrors>
+  <mirror>
+    <id>matson-matson-central</id>
+    <name>matson-matson-central</name>
+    <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/matson-central/</url>
+    <mirrorOf>*</mirrorOf>
+  </mirror>
+</mirrors>
     <!--
     <mirrors>
       <mirror>
