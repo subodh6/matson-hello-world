@@ -6,12 +6,12 @@
 
     <servers>
         <server>
-            <id>matson-central</id>
+            <id>matson-matson-central</id>
             <username>aws</username>
             <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
         </server>
         <server>
-            <id>matson-ohana-artifacts</id>
+            <id>matson-matson-ohana-artifact</id>
             <username>aws</username>
             <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
         </server>
