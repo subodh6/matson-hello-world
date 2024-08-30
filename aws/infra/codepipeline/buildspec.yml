@@ -24,7 +24,7 @@ phases:
     commands:
       - echo "Source artifact reference:$CODEBUILD_SOURCE_VERSION"
       - echo "Build started"
-      - cp -r aws/infra/codepipeline/* ./springboot/
+      - cp -r ./aws/infra/codepipeline/*  ./springboot/
       - cd springboot
       - ls
       - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain matson --domain-owner 196787314311 --region us-west-2 --query authorizationToken --output text)
