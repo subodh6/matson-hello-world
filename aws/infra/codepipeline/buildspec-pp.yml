@@ -17,7 +17,7 @@ phases:
       - echo "Source artifact reference:$CODEBUILD_SOURCE_VERSION"
       - echo "Running build commands for lab stages..."
       - mkdir build_artifacts
-      - cp ohana-api.war build_artifacts/
+      - cp  cas-scheduler.war build_artifacts/
       # - aws s3 cp $CICD_CONFIG_PATH . --recursive
       - echo "Downloading finished "
 
@@ -40,7 +40,7 @@ phases:
       - sed -i "s|\$WAR_FILE_NAME|cas-scheduler.war|g" application_start.sh
       - cat appspec.yml
       - cat application_start.sh
-      - zip -r $DEPLOYMENT_PACKAGE_NAME appspec.yml application_stop_start.sh cas-scheduler.war
+      - zip -r $DEPLOYMENT_PACKAGE_NAME appspec.yml application_start.sh cas-scheduler.war
       - echo "Copying zipped files to cross-account S3 bucket which will be utilized for codedeploy"
       - aws s3 cp $DEPLOYMENT_PACKAGE_NAME $CROSS_ACCOUNT_S3_BUCKET_PATH/$DEPLOYMENT_PACKAGE_NAME
       - aws sts get-caller-identity
