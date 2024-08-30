@@ -37,7 +37,7 @@ phases:
       - echo "Zipping files for codedeploy "
       - DEPLOYMENT_PACKAGE_NAME="deployment-package-$(date +"%Y%m%d%H%M%S").zip"
       - sed -i "s|{{WAR_FILE_NAME}}|cas-scheduler.war|g" appspec.yml
-      - sed -i "s|\$WAR_FILE_NAME|cas-scheduler|g" application_start.sh
+      # - sed -i "s|\$WAR_FILE_NAME|cas-scheduler|g" application_start.sh
       - zip -r $DEPLOYMENT_PACKAGE_NAME appspec.yml application_start.sh cas-scheduler.war
       - echo "Copying zipped files to cross-account S3 bucket which will be utilized for codedeploy"
       - aws s3 cp $DEPLOYMENT_PACKAGE_NAME $CROSS_ACCOUNT_S3_BUCKET_PATH/$DEPLOYMENT_PACKAGE_NAME
