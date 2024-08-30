@@ -32,9 +32,9 @@
 	</build>
   <distributionManagement>
   <repository>
-    <id>matson-central</id>
-    <name>matson-central</name>
+    <id>matson-matson-central</id>
+    <name>matson-matson-central</name>
     <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/matson-central/</url>
   </repository>
-</distributionManagement>
+  </distributionManagement>
 </project>
