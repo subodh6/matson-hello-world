@@ -41,10 +41,10 @@ phases:
   post_build:
     commands:
       - echo "Downloading Required files for codedeploy "
-      - cp target/cas-scheduler-0.0.1-SNAPSHOT.war .
-      - mv cas-scheduler-0.0.1-SNAPSHOT.war cas-scheduler.war
+      - cp target/hello-world-war-0.0.1-SNAPSHOT.war .
+      - mv hello-world-war-0.0.1-SNAPSHOT.war cas-scheduler.war
       - mkdir build_artifacts
-      - cp cas-scheduler.war buildspec-lab.yml  buildspec-pp.yml appspec.yml application_start.sh build_artifacts/
+      - cp hello-world-war.war buildspec-lab.yml  buildspec-pp.yml appspec.yml application_start.sh build_artifacts/
       
     
  
