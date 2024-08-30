@@ -11,11 +11,12 @@
             <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
         </server>
         <server>
-            <id>matson-ohana-artifact</id>
+            <id>matson-ohana-artifacts</id>
             <username>aws</username>
             <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
         </server>
     </servers>
+
     <!-- <mirrors>
   <mirror>
     <id>matson-matson-central</id>

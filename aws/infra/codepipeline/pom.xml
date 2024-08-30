@@ -34,7 +34,7 @@
   <repository>
     <id>matson-central</id>
     <name>matson-central</name>
-    <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/matson-central/</url>
+    <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
   </repository>
   </distributionManagement>
 </project>
