@@ -1,0 +1,53 @@
+version: 0.2
+ 
+phases:
+  install:
+   runtime-versions:
+      python: 3.10  # Replace with the Python version you need
+
+   commands:
+      - echo "Skipping yum update..."
+      - pip install boto3
+     
+
+ 
+  pre_build:
+    commands:
+      - echo "version controller"
+      - yum update -y
+      - yum install jq -y
+      - yum install zip -y
+      - pip install requests
+      - pip install ruamel.yaml
+ 
+  build:
+    commands:
+      - echo "Source artifact reference:$CODEBUILD_SOURCE_VERSION"
+      - echo "Build started"
+      - cp -r aws/infra/codepipeline/* springboot/
+      - cd springboot
+      - ls
+      - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain matson --domain-owner 196787314311 --region us-west-2 --query authorizationToken --output text)
+      - echo "Integration of CodeArtifact and authorizing"
+      - echo "Build Initiated"
+      - mvn clean install -s settings.xml
+      - echo "Build Completed"
+      - echo "publishing artifact to CodeArtifact"
+      - mvn deploy -s settings.xml
+      - echo "publishing artifact completed"
+
+   
+ 
+  post_build:
+    commands:
+      - echo "Downloading Required files for codedeploy "
+      - cp target/cas-scheduler-0.0.1-SNAPSHOT.war .
+      - mv cas-scheduler-0.0.1-SNAPSHOT.war cas-scheduler.war
+      - mkdir build_artifacts
+      - cp cas-scheduler.war buildspec-lab.yml  buildspec-pp.yml appspec.yml application_start.sh build_artifacts/
+      
+    
+ 
+artifacts:
+  files: '**/build_artifacts/*'
+  discard-paths: yes
