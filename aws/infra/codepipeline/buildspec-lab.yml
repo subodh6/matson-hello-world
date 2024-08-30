@@ -45,6 +45,7 @@ phases:
       - echo "Codedeploy deployment started"
       - aws deploy create-deployment --application-name cas-scheduler-application --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name cas-scheduler-deploygroup --description "Deployment Description" --s3-location bucket=$CROSS_ACCOUNT_S3_BUCKET,bundleType=zip,key=$DEPLOYMENT_PACKAGE_NAME --region us-east-1
       - echo "Waiting for deployment to complete..."
+      - deploymentId=$(aws deploy list-deployments --application-name cas-scheduler-application --deployment-group-name cas-scheduler-deploygroup --region us-east-1 --query 'deployments[0]' --output text)
       - aws deploy wait deployment-successful --deployment-id $deploymentId --region us-east-1
       - echo "Deployment finished"
 
