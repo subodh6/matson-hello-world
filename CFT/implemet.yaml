@@ -222,8 +222,8 @@ Resources:
                   - !GetAtt CodeBuild.Arn
                   - !GetAtt CodeBuildDeployLab.Arn
                   # - !GetAtt CodeBuildDeployDev.Arn
-                  # - !GetAtt CodeBuildDeployPP.Arn
-                  - !GetAtt CodeBuildDeployProd.Arn
+                  - !GetAtt CodeBuildDeployPP.Arn
+                  # - !GetAtt CodeBuildDeployProd.Arn
               - Effect: Allow
                 Action:
                   - codestar-connections:UseConnection
