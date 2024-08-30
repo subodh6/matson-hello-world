@@ -6,7 +6,7 @@
 
     <servers>
         <server>
-            <id>matson-central</id>
+            <id>matson-central-store</id>
             <username>aws</username>
             <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
         </server>
