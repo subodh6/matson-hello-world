@@ -55,9 +55,9 @@
 	<!-- This can be removed after CodeArtifact poc -->
 	<distributionManagement>
 		<repository>
-			<id>matson-ohana-artifacts</id>
-			<name>matson-ohana-artifacts</name>
-			<url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/ohana-artifacts/</url>
+			<id>matson-cas-scheduler</id>
+			<name>matson-cas-scheduler</name>
+			<url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/cas-scheduler/</url>
 		</repository>
 	</distributionManagement>
 </project>

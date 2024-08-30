@@ -11,7 +11,7 @@
             <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
         </server>
         <server>
-            <id>matson-ohana-artifacts</id>
+            <id>matson-cas-scheduler</id>
             <username>aws</username>
             <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
         </server>
