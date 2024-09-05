@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Assuming Tomcat is installed in /opt/apache-tomcat-10.1.18, adjust the path accordingly
-TOMCAT_HOME="/opt/apache-tomcat-9.0.93"
+TOMCAT_HOME="/opt/apache-tomcat-9.0.93/"
  
 sudo $TOMCAT_HOME/bin/shutdown.sh
 sudo rm -rf $TOMCAT_HOME/webapps/*
