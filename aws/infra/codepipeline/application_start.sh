@@ -2,15 +2,11 @@
 
 # Assuming Tomcat is installed in /opt/apache-tomcat-10.1.18, adjust the path accordingly
 TOMCAT_HOME="/opt/apache-tomcat-9.0.93"
-# TOMCAT_HOME="/home/ec2-user/apache-tomcat-9.0.93"
-
-
-
-# Stop Tomcat if it is already running (to ensure a clean start)
+ 
 sudo $TOMCAT_HOME/bin/shutdown.sh
 sudo rm -rf $TOMCAT_HOME/webapps/*
 sudo mv /tmp/cas-scheduler.war /tmp/ROOT.war
-sudo cp -R /tmp/*.war $TOMCAT_HOME/webapps/
+sudo cp -R /tmp/*.war $TOMCAT_HOME/webapps
 sudo $TOMCAT_HOME/bin/startup.sh
 
 # Wait for Tomcat to fully stop (adjust the sleep duration based on your application's shutdown time)
