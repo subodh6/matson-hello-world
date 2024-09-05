@@ -33,6 +33,7 @@ phases:
           echo "Skipping SAST/SCA and proceeding with build"
           echo "Source artifact reference: $CODEBUILD_SOURCE_VERSION"
           echo "Build started"
+          cp -r aws/infra/DevSecOps/SAST/* Ohana-Springboot/
           cp -r aws/infra/codepipeline/* Ohana-Springboot/
           cd Ohana-Springboot
           mvn clean install -s settings.xml
@@ -48,7 +49,7 @@ phases:
       -   cp target/hello-world-war-1.0.2.war .
       -   mv hello-world-war-1.0.2.war cas-scheduler.war
       -   mkdir build_artifacts
-      -   cp -R cas-scheduler.war buildspec-lab.yml  ../DevSecOps/SAST/buildspec.yml appspec.yml application_start.sh build_artifacts/
+      -   cp -R cas-scheduler.war buildspec-lab.yml buildspec.yml appspec.yml application_start.sh build_artifacts/
 
 artifacts:
   files:
