@@ -11,6 +11,7 @@ phases:
     commands:
       - echo "Pre-build phase started"
       - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain matson --domain-owner 891377353125 --region us-east-1 --query authorizationToken --output text)
+      
   build:
     commands:
       - |
