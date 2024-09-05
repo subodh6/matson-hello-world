@@ -7,6 +7,7 @@ from ruamel.yaml import YAML
 from datetime import datetime
 from lib.helpers import scan_automation
 import boto3
+from botocore.exceptions import NoCredentialsError, PartialCredentialsError
 
 def get_ssm_parameter(name):
     ssm_client = boto3.client('ssm')
@@ -23,7 +24,6 @@ def get_ssm_parameter(name):
         logging.error(f"Error retrieving parameter {name}: {e}")
         raise
 
-
 def main():
     # Load configuration file
     yaml = YAML(typ='safe')
@@ -35,19 +35,14 @@ def main():
 
     # Get connection info
     if settings.get("connection"):
-        api_key = settings.get("connection").get("api_key")
+        api_key = get_ssm_parameter("/ohana-api/appspec-insights/api-key")
         region = settings.get("connection").get("region", "us")
     else:
         api_key = None
         region = "us"
 
-    # Prompt user for API key if there isn't one configured
-    if api_key is None:
-        api_key = get_ssm_parameter("/ohana-api/appspec-insights/api-key")
-
     logging.info(f"Region: {region}")
     scan_automation.create_scan(api_key, region, settings)
-
 
 if __name__ == "__main__":
     main()

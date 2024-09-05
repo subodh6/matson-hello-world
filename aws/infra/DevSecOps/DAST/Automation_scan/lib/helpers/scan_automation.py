@@ -46,6 +46,7 @@ def report_findings(api: InsightAppSec, scan_ids: [str], id_to_names: dict):
             description = vuln.get("description")
             logging.info(f"Vuln ID: {vuln_id}, Severity: {severity}, Description: {description}")
 
+
 def track_scans(api: InsightAppSec, scan_ids: [str], id_to_names: dict, interval: int):
     """
     Tracks the status of all current scans being run
@@ -138,4 +139,3 @@ def log_status(api: InsightAppSec, scan_id: str, id_to_names: dict) -> str:
         failure_reason = scan.get("failure_reason")
         logging.info(f"Reason for failure: {failure_reason}")
     return scan_status
-

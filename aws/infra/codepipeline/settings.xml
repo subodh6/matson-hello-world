@@ -10,11 +10,11 @@
             <username>aws</username>
             <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
         </server>
-        <server>
+        <!-- <server>
             <id>matson-cas-scheduler</id>
             <username>aws</username>
             <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
-        </server>
+        </server> -->
     </servers>
 
     <!-- <mirrors>

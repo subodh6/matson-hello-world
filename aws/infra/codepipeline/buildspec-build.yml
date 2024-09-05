@@ -32,9 +32,9 @@ phases:
       - echo "Build Initiated"
       - mvn clean install -s settings.xml
       - echo "Build Completed"
-      - echo "publishing artifact to CodeArtifact"
-      - mvn deploy -s settings.xml
-      - echo "publishing artifact completed"
+      # - echo "publishing artifact to CodeArtifact"
+      # - mvn deploy -s settings.xml
+      # - echo "publishing artifact completed"
 
    
  

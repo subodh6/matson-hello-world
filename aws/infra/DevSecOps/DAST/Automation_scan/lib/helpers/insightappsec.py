@@ -76,13 +76,17 @@ class InsightAppSec:
         url_split = url.split("/")
         resource_id = url_split[-1]
         return resource_id
-
+        
     def get_vulnerabilities(self, scan_id):
-        url = self.url + f"/vulnerabilities?query=vulnerability.scans.id='{scan_id}'"
+        url = self.url + "/search"
         headers = self.headers
+        payload = {
+            "query": f"vulnerability.scans.id = '{scan_id}'",
+            "type": "VULNERABILITY"
+        }
 
         try:
-            response = requests.get(url=url, headers=headers)
+            response = requests.post(url=url, headers=headers, data=json.dumps(payload))
             response.raise_for_status()
 
             vulnerabilities = response.json()
