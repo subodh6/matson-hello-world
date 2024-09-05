@@ -50,11 +50,11 @@ Parameters:
   #   AllowedPattern: ".+"
   #   # Default: 1111111
 
-  PreprodAccountId:
-    Type: String
-    Description: Account ID for Preprod
-    AllowedPattern: ".+"
-    # Default: 111111111
+  # PreprodAccountId:
+  #   Type: String
+  #   Description: Account ID for Preprod
+  #   AllowedPattern: ".+"
+  #   # Default: 111111111
 
   # ProdAccountId:
   #   Type: String
@@ -219,7 +219,7 @@ Resources:
                   - codebuild:BatchGetBuilds
                   - codebuild:StartBuild
                 Resource:
-                  - !GetAtt CodeBuild.Arn
+                  # - !GetAtt CodeBuild.Arn
                   - !GetAtt CodeBuildDeployLab.Arn
                   - !GetAtt SASTStage.Arn
                   - !GetAtt DASTStage.Arn
@@ -484,7 +484,7 @@ Resources:
                 Version: "1"
                 Provider: CodeBuild
               InputArtifacts:
-                - Name: BuildArtifacts
+                - Name: StaticArtifacts
               OutputArtifacts:
                 - Name: LabDeploymentArtifacts
               Configuration:
@@ -541,7 +541,7 @@ Resources:
                 Version: "1"
                 Provider: CodeBuild
               InputArtifacts:
-                - Name: BuildArtifacts
+                - Name: StaticArtifacts
               OutputArtifacts:
                 - Name: DynamicArtifacts
               Configuration:
