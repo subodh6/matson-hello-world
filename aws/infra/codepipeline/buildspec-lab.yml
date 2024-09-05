@@ -17,7 +17,7 @@ phases:
       - echo "Source artifact reference:$CODEBUILD_SOURCE_VERSION"
       - echo "Running build commands for lab stages..."
       - mkdir build_artifacts
-      - cp cas-scheduler.war build_artifacts/
+      - cp cas-scheduler.war  buildspec-lab.yml appspec.yml application_start.sh build_artifacts/
       # - aws s3 cp $CICD_CONFIG_PATH . --recursive
       - echo "Downloading finished "
 
