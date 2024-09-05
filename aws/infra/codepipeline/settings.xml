@@ -5,11 +5,11 @@
 
 
     <servers>
-        <server>
-            <id>matson-central</id>
-            <username>aws</username>
-            <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
-        </server>
+         <server>
+         <id>matson-maven-central-store</id>
+         <username>aws</username>
+         <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
+    </server>
         <!-- <server>
             <id>matson-cas-scheduler</id>
             <username>aws</username>
