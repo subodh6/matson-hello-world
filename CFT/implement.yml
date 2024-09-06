@@ -18,11 +18,11 @@ Parameters:
     AllowedPattern: ".+"
     #Default: "MatsonInc"
 
-  CodeArtifactRepository:
-    Type: String
-    Description: The Codeartifact Repository used to Build&deploy application **Mandatory field
-    AllowedPattern: ".+"
-    #Default: "Central"
+  # CodeArtifactRepository:
+  #   Type: String
+  #   Description: The Codeartifact Repository used to Build&deploy application **Mandatory field
+  #   AllowedPattern: ".+"
+  #   #Default: "Central"
 
   CodeBuildEnvironmentType:
     Type: String
@@ -150,8 +150,8 @@ Resources:
                   - codeartifact:ReadFromRepository
                   - codeartifact:Get*
                 Resource:
-                 # - "*"
-                  - !Sub arn:aws:codeartifact:${AWS::Region}:${AWS::AccountId}:package/matson/${CodeArtifactRepository}/*
+                  - "*"
+                  
 
   MatsonCodePipelineRole:
     Type: AWS::IAM::Role
