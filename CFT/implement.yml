@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: Deploy a CI/CD pipeline for EC2.
+Description: Deploy a CI/CD pipeline for EC2 with Load balancer.
 
 Parameters:
   GitHubRepo:
@@ -22,6 +22,7 @@ Parameters:
     Type: String
     Description: The Codeartifact Repository used to Build&deploy application **Mandatory field
     AllowedPattern: ".+"
+    #Default: "Central"
 
   CodeBuildEnvironmentType:
     Type: String
@@ -43,24 +44,11 @@ Parameters:
     Description: Account ID for matsonlabs
     AllowedPattern: ".+"
   #  Default: 11111111
-
-  # devAccountId:
-  #   Type: String
-  #   Description: Account ID for dev
-  #   AllowedPattern: ".+"
-  #   # Default: 1111111
-
-  # PreprodAccountId:
-  #   Type: String
-  #   Description: Account ID for Preprod
-  #   AllowedPattern: ".+"
-  #   # Default: 111111111
-
-  # ProdAccountId:
-  #   Type: String
-  #   Description: Account ID for Prod
-  #    AllowedPattern: ".+"
-  #   Default: 111111
+  
+  codePipelineBucket:
+    Type: String
+    Description: Account ID for matsonlabs
+    AllowedPattern: ".+"  
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -81,7 +69,7 @@ Metadata:
           default: "Account Config"
         Parameters:
           - labAccountId
-          # - devMatsonAccountId
+
     ParameterLabels:
       GitHubUser:
         default: GitHub User Name
@@ -99,22 +87,8 @@ Metadata:
         default: CodeBuild image
       labAccountId:
         default: Account ID for  AWS Lab Env
-      # devMatsonAccountId:
-      #   default: Account ID for  AWS dev Env
 
 Resources:
-
-  # NotificationPPSNSTopic:
-  #   Type: 'AWS::SNS::Topic'
-  #   Properties:
-  #     DisplayName: 'Matson-sns-for-manual-approval-notification'
-  #     TopicName: !Sub ${AWS::StackName}-Approval-PP
-
-  # NotificationProdSNSTopic:
-  #   Type: 'AWS::SNS::Topic'
-  #   Properties:
-  #     DisplayName: 'Matson-sns-for-manual-approval-notification'
-  #     TopicName: !Sub ${AWS::StackName}-Approval-Prod
 
   GitHubCodeStarConnection:
     Type: AWS::CodeStarConnections::Connection
@@ -161,15 +135,13 @@ Resources:
                   - s3:GetBucketAcl
                   - s3:GetBucketLocation
                 Resource:
-                  - !Sub arn:aws:s3:::${AWS::StackName}/*
+                  #- !Sub arn:aws:s3:::${AWS::StackName}/*
+                  - !Sub arn:aws:s3:::${codePipelineBucket}/*
               - Effect: Allow
                 Action:
                   - sts:AssumeRole
                 Resource: # cross-account deploy roles
                   - !Sub arn:aws:iam::${labAccountId}:role/${AWS::StackName}-deployer-role
-                  # - !Sub arn:aws:iam::${devAccountId}:role/${AWS::StackName}-deployer-role
-                  # - !Sub arn:aws:iam::${PreprodAccountId}:role/${AWS::StackName}-deployer-role
-                  # - !Sub arn:aws:iam::${ProdAccountId}:role/${AWS::StackName}-deployer-role 
               - Effect: Allow
                 Action:
                   - sts:GetServiceBearerToken
@@ -178,23 +150,8 @@ Resources:
                   - codeartifact:ReadFromRepository
                   - codeartifact:Get*
                 Resource:
-                  - "*"
-              # - Effect: Allow
-              #   Action:
-              #     - codeartifact:PublishPackageVersion
-              #     - codeartifact:PutPackageMetadata
-              #   Resource:
-              #     - !Sub arn:aws:codeartifact:${AWS::Region}:${AWS::AccountId}:package/matson/${CodeArtifactRepository}/*
-              # - Effect: Allow
-              #   Action:
-              #     - s3:GetObject
-              #     - s3:GetObjectVersion
-              #     - s3:GetBucketAcl
-              #     - s3:GetBucketLocation
-              #     - s3:ListBucket
-              #   Resource:
-              #     - arn:aws:s3:::cicd-configuration
-              #     - arn:aws:s3:::cicd-configuration/*
+                 # - "*"
+                  - !Sub arn:aws:codeartifact:${AWS::Region}:${AWS::AccountId}:package/matson/${CodeArtifactRepository}/*
 
   MatsonCodePipelineRole:
     Type: AWS::IAM::Role
@@ -219,13 +176,8 @@ Resources:
                   - codebuild:BatchGetBuilds
                   - codebuild:StartBuild
                 Resource:
-                  # - !GetAtt CodeBuild.Arn
+                  - !GetAtt CodeBuild.Arn
                   - !GetAtt CodeBuildDeployLab.Arn
-                  - !GetAtt SASTStage.Arn
-                  - !GetAtt DASTStage.Arn
-                  # - !GetAtt CodeBuildDeployDev.Arn
-                  # - !GetAtt CodeBuildDeployPP.Arn
-                  # - !GetAtt CodeBuildDeployProd.Arn
               - Effect: Allow
                 Action:
                   - codestar-connections:UseConnection
@@ -236,43 +188,37 @@ Resources:
                   - s3:Put*
                   - s3:Get*
                 Resource:
-                  - !Sub "arn:aws:s3:::${AWS::StackName}/*"
-              # - Effect: Allow
-              #   Action:
-              #     - sns:Publish
-              #   Resource:
-              #     - !Ref NotificationPPSNSTopic
-                  # - !Ref NotificationProdSNSTopic
-
+                  #- !Sub "arn:aws:s3:::${AWS::StackName}/*"
+                  - !Sub "arn:aws:s3:::${codePipelineBucket}/*"
   #
   # pipeline bucket
   #
-  codePipelineBucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Sub ${AWS::StackName}
-      LifecycleConfiguration:
-        Rules:
-          - Id: !Sub ${AWS::StackName}-lifecycle-policy
-            Status: Enabled
-            Prefix: !Sub "${AWS::StackName}/SourceArti/"
-            Transition:
-              StorageClass: INTELLIGENT_TIERING
-              TransitionInDays: 30
-            ExpirationInDays: 300
+  # codePipelineBucket:
+  #   Type: AWS::S3::Bucket
+  #   Properties:
+  #     BucketName: !Sub ${AWS::StackName}
+  #     LifecycleConfiguration:
+  #       Rules:
+  #         - Id: !Sub ${AWS::StackName}-lifecycle-policy
+  #           Status: Enabled
+  #           Prefix: !Sub "${AWS::StackName}/SourceArti/"
+  #           Transition:
+  #             StorageClass: INTELLIGENT_TIERING
+  #             TransitionInDays: 30
+  #           ExpirationInDays: 300
 
-  SASTStage:
+  CodeBuild:
     Type: AWS::CodeBuild::Project
     Properties:
       Name:
-        Fn::Sub: "${AWS::StackName}-SAST-Stage"
-      Description: SAST Analaysis
+        Fn::Sub: "${AWS::StackName}-build"
+      Description: Build application
       ServiceRole: !GetAtt CodeBuildRole.Arn
       Artifacts:
         Type: CODEPIPELINE
       Source:
         Type: CODEPIPELINE
-        BuildSpec: aws/infra/DevSecOps/SAST/buildspec.yml
+        BuildSpec: aws/infra/codepipeline/buildspec-build.yml
       TimeoutInMinutes: 40
       Environment:
         Type: !Ref CodeBuildEnvironmentType
@@ -280,9 +226,9 @@ Resources:
         Image: !Sub ${CodeBuildImage}
         EnvironmentVariables:
           - Name: STAGE
-            Value: "SAST"
-          - Name: static_scan
-            Value: "yes"
+            Value: "Build"
+          - Name: CICD_CONFIG_PATH
+            Value: "s3://cicd-configuration/"
 
   CodeBuildDeployLab:
     Type: AWS::CodeBuild::Project
@@ -312,111 +258,6 @@ Resources:
             Value: "s3://cicd-configuration/"
           - Name: CROSS_ACCOUNT_S3_BUCKET_PATH
             Value: !Sub s3://${AWS::StackName}-lab
-
-  # CodeBuildDeployDev:
-  #   Type: AWS::CodeBuild::Project
-  #   Properties:
-  #     Name:
-  #       Fn::Sub: "${AWS::StackName}-build-dev"
-  #     Description: Deploy CodeBuildDeploy to Dev
-  #     ServiceRole: !GetAtt CodeBuildRole.Arn
-  #     Artifacts:
-  #       Type: CODEPIPELINE
-  #     Source:
-  #       Type: CODEPIPELINE
-  #       BuildSpec: buildspec-dev.yml
-  #     TimeoutInMinutes: 40
-  #     Environment:
-  #       Type: !Ref CodeBuildEnvironmentType
-  #       ComputeType: !Ref CodeBuildComputeType
-  #       Image: !Sub ${CodeBuildImage}
-  #       EnvironmentVariables:
-  #         - Name: STAGE
-  #           Value: "dev"
-  #         - Name: CROSS_ACCOUNT_S3_BUCKET
-  #           Value: !Sub ${AWS::StackName}-dev
-  #         - Name: CICD_CONFIG_PATH
-  #           Value: "s3://cicd-configuration/"
-  #         - Name: CROSS_ACCOUNT_S3_BUCKET_PATH
-  #           Value: !Sub s3://${AWS::StackName}-dev
-
-  DASTStage:
-    Type: AWS::CodeBuild::Project
-    Properties:
-      Name:
-        Fn::Sub: "${AWS::StackName}-DAST-Stage"
-      Description: SAST Analaysis
-      ServiceRole: !GetAtt CodeBuildRole.Arn
-      Artifacts:
-        Type: CODEPIPELINE
-      Source:
-        Type: CODEPIPELINE
-        BuildSpec: aws/infra/DevSecOps/DAST/buildspec.yml
-      TimeoutInMinutes: 40
-      Environment:
-        Type: !Ref CodeBuildEnvironmentType
-        ComputeType: !Ref CodeBuildComputeType
-        Image: !Sub ${CodeBuildImage}
-        EnvironmentVariables:
-          - Name: STAGE
-            Value: "DAST"
-          - Name: dynamic_scan
-            Value: "yes"
-
-  # CodeBuildDeployPP:
-  #   Type: AWS::CodeBuild::Project
-  #   Properties:
-  #     Name:
-  #       Fn::Sub: "${AWS::StackName}-build-PP"
-  #     Description: Deploy CodeBuildDeploy to Preprod
-  #     ServiceRole: !GetAtt CodeBuildRole.Arn
-  #     Artifacts:
-  #       Type: CODEPIPELINE
-  #     Source:
-  #       Type: CODEPIPELINE
-  #       BuildSpec: buildspec-pp.yml
-  #     TimeoutInMinutes: 40
-  #     Environment:
-  #       Type: !Ref CodeBuildEnvironmentType
-  #       ComputeType: !Ref CodeBuildComputeType
-  #       Image: !Sub ${CodeBuildImage}
-  #       EnvironmentVariables:
-  #         - Name: STAGE
-  #           Value: "preprod"
-  #         - Name: CROSS_ACCOUNT_S3_BUCKET
-  #           Value: !Sub ${AWS::StackName}-pp
-  #         - Name: CICD_CONFIG_PATH
-  #           Value: "s3://cicd-configuration/"
-  #         - Name: CROSS_ACCOUNT_S3_BUCKET_PATH
-  #           Value: !Sub s3://${AWS::StackName}-pp
-
-  # CodeBuildDeployProd:
-  #   Type: AWS::CodeBuild::Project
-  #   Properties:
-  #     Name:
-  #       Fn::Sub: "${AWS::StackName}-build-Prod"
-  #     Description: Deploy CodeBuildDeploy to Production
-  #     ServiceRole: !GetAtt CodeBuildRole.Arn
-  #     Artifacts:
-  #       Type: CODEPIPELINE
-  #     Source:
-  #       Type: CODEPIPELINE
-  #       BuildSpec: buildspec-prod.yml
-  #     TimeoutInMinutes: 40
-  #     Environment:
-  #       Type: !Ref CodeBuildEnvironmentType
-  #       ComputeType: !Ref CodeBuildComputeType
-  #       Image: !Sub ${CodeBuildImage}
-  #       EnvironmentVariables:
-  #         - Name: STAGE
-  #           Value: "prod"
-  #         - Name: CROSS_ACCOUNT_S3_BUCKET
-  #           Value: !Sub ${AWS::StackName}-prod
-  #         - Name: CICD_CONFIG_PATH
-  #           Value: "s3://cicd-configuration/"
-  #         - Name: CROSS_ACCOUNT_S3_BUCKET_PATH
-  #           Value: !Sub s3://${AWS::StackName}-prod
-
   #
   # pipeline
   #
@@ -444,9 +285,9 @@ Resources:
                 FullRepositoryId: !Sub "${GitHubUser}/${GitHubRepo}"
                 BranchName: !Ref GitHubBranch
               RunOrder: 1
-        - Name: SAST-stage
+        - Name: Build-stage
           Actions:
-            - Name: Static-Scan
+            - Name: Building-Application
               ActionTypeId:
                 Category: Build
                 Owner: AWS
@@ -455,26 +296,10 @@ Resources:
               InputArtifacts:
                 - Name: SourceArtifacts
               OutputArtifacts:
-                - Name: StaticArtifacts
+                - Name: BuildArtifacts
               Configuration:
-                ProjectName: !Ref SASTStage
-                EnvironmentVariables: '[{"name":"doStaticScan","value":"No","type":"PLAINTEXT"}]'
+                ProjectName: !Ref CodeBuild
               RunOrder: 1
-        # - Name: Build-stage
-        #   Actions:
-        #     - Name: Building-Application
-        #       ActionTypeId:
-        #         Category: Build
-        #         Owner: AWS
-        #         Version: "1"
-        #         Provider: CodeBuild
-        #       InputArtifacts:
-        #         - Name: SourceArtifacts
-        #       OutputArtifacts:
-        #         - Name: BuildArtifacts
-        #       Configuration:
-        #         ProjectName: !Ref CodeBuild
-        #       RunOrder: 1
         - Name: Labs-stage
           Actions:
             - Name: Deploy-to-MatsonLabs
@@ -484,97 +309,12 @@ Resources:
                 Version: "1"
                 Provider: CodeBuild
               InputArtifacts:
-                - Name: StaticArtifacts
+                - Name: BuildArtifacts
               OutputArtifacts:
                 - Name: LabDeploymentArtifacts
               Configuration:
                 ProjectName: !Ref CodeBuildDeployLab
               RunOrder: 1
-        # - Name: Dev-stage
-        #   Actions:
-        #     - Name: Deploy-to-Dev
-        #       ActionTypeId:
-        #         Category: Build
-        #         Owner: AWS
-        #         Version: "1"
-        #         Provider: CodeBuild
-        #       InputArtifacts:
-        #         - Name: BuildArtifacts
-        #       OutputArtifacts:
-        #         - Name: DevDeploymentArtifacts
-        #       Configuration:
-        #         ProjectName: !Ref CodeBuildDeployDev
-        #       RunOrder: 1
-        # - Name: Approval-stage-pp
-        #   Actions:
-        #     - Name: Approval-to-pp
-        #       ActionTypeId:
-        #         Category: Approval
-        #         Owner: AWS
-        #         Version: "1"
-        #         Provider: Manual
-        #       Configuration:
-        #         NotificationArn: !Ref NotificationPPSNSTopic
-        #         CustomData: "PP - PreProd deployment Pending Approval"
-        #       RunOrder: 1
-        # - Name: Preprod-stage
-        #   Actions:
-        #     - Name: Deploy-to-preprod
-        #       ActionTypeId:
-        #         Category: Build
-        #         Owner: AWS
-        #         Version: "1"
-        #         Provider: CodeBuild
-        #       InputArtifacts:
-        #         - Name: BuildArtifacts
-        #       OutputArtifacts:
-        #         - Name: PreprodDeploymentArtifacts
-        #       Configuration:
-        #         ProjectName: !Ref CodeBuildDeployPP
-        #       RunOrder: 1
-        - Name: DAST-stage
-          Actions:
-            - Name: Dynamic-Scan
-              ActionTypeId:
-                Category: Build
-                Owner: AWS
-                Version: "1"
-                Provider: CodeBuild
-              InputArtifacts:
-                - Name: StaticArtifacts
-              OutputArtifacts:
-                - Name: DynamicArtifacts
-              Configuration:
-                ProjectName: !Ref DASTStage
-                EnvironmentVariables: '[{"name":"doDASTScan","value":"Yes","type":"PLAINTEXT"}]'
-              RunOrder: 1
-        # - Name: Approval-stage-prod
-        #   Actions:
-        #     - Name: Approval-to-prod
-        #       ActionTypeId:
-        #         Category: Approval
-        #         Owner: AWS
-        #         Version: "1"
-        #         Provider: Manual
-        #       Configuration:
-        #         NotificationArn: !Ref NotificationProdSNSTopic
-        #         CustomData: "Prod - Production deployment Pending Approval"
-        #       RunOrder: 1
-        # - Name: Prod-stage
-        #   Actions:
-        #     - Name: Deploy-to-prod
-        #       ActionTypeId:
-        #         Category: Build
-        #         Owner: AWS
-        #         Version: "1"
-        #         Provider: CodeBuild
-        #       InputArtifacts:
-        #         - Name: BuildArtifacts
-        #       OutputArtifacts:
-        #         - Name: ProdDeploymentArtifacts
-        #       Configuration:
-        #         ProjectName: !Ref CodeBuildDeployProd
-        #       RunOrder: 1
 
 Outputs:
   CodeStarGithubConnectionARN:
