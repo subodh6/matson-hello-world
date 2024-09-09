@@ -10,16 +10,16 @@
             <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
         </server>
     </servers>
-    <!-- <mirrors>
+    <mirrors>
       <mirror>
        <id>matson-central</id>
        <name>matson-central</name>
        <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
        <mirrorOf>*</mirrorOf>
       </mirror>
-   </mirrors> -->
+   </mirrors>
    
-<profiles>
+<!-- <profiles>
   <profile>
     <id>matson-central</id>
     <activation>
@@ -32,5 +32,5 @@
       </repository>
     </repositories>
   </profile>
-</profiles>
+</profiles> -->
 </settings>
