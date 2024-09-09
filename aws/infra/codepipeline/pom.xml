@@ -39,16 +39,16 @@
 
     <repositories>
         <repository>
-            <id>matson-central</id>
-            <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
+            <id>maven-central-store</id>
+            <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central-store/</url>
         </repository>
     </repositories>
 
-    <distributionManagement>
+    <!-- <distributionManagement>
         <repository>
             <id>matson-central</id>
             <name>matson-central</name>
             <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
         </repository>
-    </distributionManagement>
+    </distributionManagement> -->
 </project>

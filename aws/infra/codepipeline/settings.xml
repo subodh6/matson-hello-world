@@ -5,7 +5,7 @@
     
     <servers>
         <server>
-            <id>matson-central</id> <!-- Match the id used in your repositories -->
+            <id>matson-central-store</id> <!-- Match the id used in your repositories -->
             <username>aws</username>
             <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
         </server>
@@ -16,8 +16,8 @@
             <id>aws-codeartifact</id>
             <repositories>
                 <repository>
-                    <id>matson-central</id> <!-- Match the id used in your repositories -->
-                    <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
+                    <id>matson-central-store</id> <!-- Match the id used in your repositories -->
+                    <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central-store/</url>
                     <releases><enabled>true</enabled></releases>
                     <snapshots><enabled>true</enabled></snapshots>
                 </repository>
