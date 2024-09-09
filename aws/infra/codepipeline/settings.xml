@@ -18,4 +18,19 @@
        <mirrorOf>*</mirrorOf>
       </mirror>
    </mirrors>
+   
+<profiles>
+  <profile>
+    <id>matson-central</id>
+    <activation>
+      <activeByDefault>true</activeByDefault>
+    </activation>
+    <repositories>
+      <repository>
+        <id>matson-central</id>
+        <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
+      </repository>
+    </repositories>
+  </profile>
+</profiles>
 </settings>
