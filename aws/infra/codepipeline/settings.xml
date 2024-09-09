@@ -12,14 +12,15 @@
     </servers>
 
     <!-- Configure the mirror for all repositories -->
-    <!-- <mirrors>
-        <mirror>
-            <id>matson-maven-central-store</id>
-            <mirrorOf>*</mirrorOf> This ensures all requests go to CodeArtifact
-            <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/maven-central-store/</url>
-            <blocked>false</blocked>
-        </mirror>
-    </mirrors> -->
+   
+    <mirrors>
+      <mirror>
+       <id>matson-cental</id>
+       <name>matson-cental</name>
+       <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/cental/</url>
+       <mirrorOf>*</mirrorOf>
+      </mirror>
+   </mirrors>
 <!-- 
     <profiles>
         <profile>
