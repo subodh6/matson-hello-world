@@ -13,14 +13,14 @@
 
     <!-- Configure the mirror for all repositories -->
    
-    <!-- <mirrors>
+    <mirrors>
       <mirror>
-       <id>matson-cental</id>
-       <name>matson-cental</name>
-       <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/cental/</url>
+       <id>matson-central</id>
+       <name>matson-central</name>
+       <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
        <mirrorOf>*</mirrorOf>
       </mirror>
-   </mirrors> -->
+   </mirrors>
 <!-- 
     <profiles>
         <profile>
