@@ -9,18 +9,23 @@
        <username>aws</username>
        <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
      </server>
+     <server>
+       <id>matson-central-store</id>
+       <username>aws</username>
+       <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
+     </server>
     </servers>
 
     <!-- Configure the mirror for all repositories -->
-<!--    
+   
     <mirrors>
       <mirror>
-       <id>matson-central</id>
-       <name>matson-central</name>
-       <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
+       <id>matson-central-store</id>
+       <name>matson-central-store</name>
+       <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central-store/</url>
        <mirrorOf>*</mirrorOf>
       </mirror>
-   </mirrors> -->
+   </mirrors>
 <!-- 
     <profiles>
         <profile>
