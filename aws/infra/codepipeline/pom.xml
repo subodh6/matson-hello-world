@@ -41,8 +41,8 @@
  
     <distributionManagement>
         <repository>
-            <id>cas-scheduler</id>
-            <name>cas-scheduler</name>
+            <id>matson-cas-scheduler</id>
+            <name>matson-cas-scheduler</name>
             <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/cas-scheduler/</url>
         </repository>
     </distributionManagement>
