@@ -5,7 +5,7 @@
     <groupId>com.efsavage</groupId>
     <artifactId>cas-scheduler-admin</artifactId>
     <version>1.0.2</version>
-    <packaging>jar</packaging> <!-- Change from war to jar -->
+    <packaging>war</packaging> <!-- Change from war to jar -->
 
     <name>helloworld-app</name>
     <description>Simplest possible Java Webapp</description>
@@ -44,11 +44,11 @@
         </repository>
     </repositories>
 
-    <distributionManagement>
+    <!-- <distributionManagement>
         <repository>
             <id>matson-central</id>
             <name>matson-central</name>
             <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
         </repository>
-    </distributionManagement>
+    </distributionManagement> -->
 </project>

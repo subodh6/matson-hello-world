@@ -33,9 +33,18 @@ phases:
       - mvn clean install -s settings.xml
       - echo "Build Completed"
       # - echo "publishing artifact to CodeArtifact"
-      - mvn deploy -s settings.xml
+      # - mvn deploy -s settings.xml
       # - echo "publishing artifact completed"
 
+   
+ 
+  post_build:
+    commands:
+      - echo "Downloading Required files for codedeploy "
+      - cp target/cas-scheduler-admin-1.0.2.war .
+      - mv cas-scheduler-admin-1.0.2.war cas-scheduler.war
+      - mkdir build_artifacts
+      - cp cas-scheduler.war buildspec-lab.yml   appspec.yml application_start.sh build_artifacts/
       
     
  
