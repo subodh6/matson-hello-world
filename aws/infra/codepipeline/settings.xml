@@ -10,22 +10,12 @@
             <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
         </server>
     </servers>
-
-    <profiles>
-        <profile>
-            <id>aws-codeartifact</id>
-            <repositories>
-                <repository>
-                    <id>matson-central</id> <!-- Match the id used in your repositories -->
-                    <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
-                    <releases><enabled>true</enabled></releases>
-                    <snapshots><enabled>true</enabled></snapshots>
-                </repository>
-            </repositories>
-        </profile>
-    </profiles>
-
-    <activeProfiles>
-        <activeProfile>aws-codeartifact</activeProfile>
-    </activeProfiles>
+    <mirrors>
+      <mirror>
+       <id>matson-central</id>
+       <name>matson-central</name>
+       <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
+       <mirrorOf>*</mirrorOf>
+      </mirror>
+   </mirrors>
 </settings>
