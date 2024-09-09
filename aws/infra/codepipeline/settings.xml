@@ -11,7 +11,7 @@
         </server>
     </servers>
 
-    <profiles>
+    <!-- <profiles>
         <profile>
             <id>aws-codeartifact</id>
             <repositories>
@@ -23,7 +23,7 @@
                 </repository>
             </repositories>
         </profile>
-    </profiles>
+    </profiles> -->
 
     <activeProfiles>
         <activeProfile>aws-codeartifact</activeProfile>
