@@ -19,7 +19,7 @@
                     <id>matson-central</id> <!-- Match the id used in your repositories -->
                     <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
                     <releases><enabled>true</enabled></releases>
-                    <snapshots><enabled>true</enabled></snapshots>
+                    <snapshots><enabled>false</enabled></snapshots>
                 </repository>
             </repositories>
         </profile>

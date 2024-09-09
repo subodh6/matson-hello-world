@@ -25,6 +25,8 @@
                         </goals>
                         <configuration>
                             <skip>false</skip> <!-- Ensure this is not skipped -->
+							<altDeploymentRepository>matson-central::default::https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</altDeploymentRepository>
+                            <skipIfNoDescriptors>true</skipIfNoDescriptors>
                         </configuration>
                     </execution>
                 </executions>
@@ -45,10 +47,10 @@
     </repositories>
 
     <distributionManagement>
-        <repository>
+        <!-- <repository>
             <id>matson-central</id>
             <name>matson-central</name>
             <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
-        </repository>
+        </repository> -->
     </distributionManagement>
 </project>
