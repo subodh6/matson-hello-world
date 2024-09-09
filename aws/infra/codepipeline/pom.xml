@@ -54,11 +54,11 @@
 
 	<!-- This can be removed after CodeArtifact poc -->
 	
-	<!-- <distributionManagement>
+	<distributionManagement>
 		<repository>
-			<id>matson-cas-scheduler</id>
-			<name>matson-cas-scheduler</name>
-			<url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/cas-scheduler/</url>
+			<id>matson-central</id>
+			<name>matson-central</name>
+			<url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
 		</repository>
-	</distributionManagement> -->
+	</distributionManagement>
 </project>
