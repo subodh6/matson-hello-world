@@ -39,11 +39,11 @@
         </repository>
     </repositories>
  
-<!--     <distributionManagement>
+    <distributionManagement>
         <repository>
             <id>matson-cas-scheduler</id>
             <name>matson-cas-scheduler</name>
             <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/cas-scheduler/</url>
         </repository>
-    </distributionManagement> -->
+    </distributionManagement>
 </project>
