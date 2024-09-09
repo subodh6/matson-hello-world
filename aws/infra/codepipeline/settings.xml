@@ -18,14 +18,14 @@
  
     <!-- Configure the mirror for all repositories -->
    
-    <!-- <mirrors>
+    <mirrors>
       <mirror>
        <id>matson-maven-central-store</id>
        <name>matson-maven-central-store</name>
        <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/maven-central-store/</url>
        <mirrorOf>*</mirrorOf>
       </mirror>
-   </mirrors> -->
+   </mirrors>
 <!--
     <profiles>
         <profile>
