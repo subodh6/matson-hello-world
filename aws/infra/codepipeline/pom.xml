@@ -32,8 +32,8 @@
 	</build>
   <repositories>
 		<repository>
-          <id>matson-central-store</id>
-          <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central-store/</url>
+          <id>matson-central</id>
+          <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
       </repository>
 	</repositories>
 	<!--<profiles>
