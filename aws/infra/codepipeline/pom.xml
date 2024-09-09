@@ -54,11 +54,17 @@
  
     <!-- This can be removed after CodeArtifact poc -->
    
-    <!-- <distributionManagement>
+    <distributionManagement>
         <repository>
             <id>matson-central-store</id>
             <name>matson-central-store</name>
             <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central-store/</url>
         </repository>
-    </distributionManagement> -->
+		<snapshotRepository>
+            <id>matson-central-snapshots</id>
+            <name>Matson Snapshot Repository</name>
+            <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central-store/</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
