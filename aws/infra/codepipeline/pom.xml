@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.efsavage</groupId>
-    <artifactId>cas-scheduler</artifactId>
+    <artifactId>cas-scheduler-admin</artifactId>
     <version>1.0.2</version>
     <packaging>war</packaging> <!-- Change from war to jar -->
 
@@ -39,16 +39,16 @@
 
     <repositories>
         <repository>
-            <id>maven-central-store</id>
+            <id>maven-central</id>
             <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central-store/</url>
         </repository>
     </repositories>
 
-    <!-- <distributionManagement>
+    <distributionManagement>
         <repository>
             <id>matson-central</id>
             <name>matson-central</name>
             <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
         </repository>
-    </distributionManagement> -->
+    </distributionManagement>
 </project>
