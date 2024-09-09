@@ -12,7 +12,7 @@
     </servers>
 
     <!-- Configure the mirror for all repositories -->
-   
+<!--    
     <mirrors>
       <mirror>
        <id>matson-central</id>
@@ -20,7 +20,7 @@
        <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
        <mirrorOf>*</mirrorOf>
       </mirror>
-   </mirrors>
+   </mirrors> -->
 <!-- 
     <profiles>
         <profile>
