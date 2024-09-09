@@ -4,49 +4,28 @@
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
     
     <servers>
-      <server>
-       <id>matson-central</id>
-       <username>aws</username>
-       <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
-     </server>
-     <server>
-       <id>matson-central-store</id>
-       <username>aws</username>
-       <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
-     </server>
+        <server>
+            <id>matson-central</id> <!-- Match the id used in your repositories -->
+            <username>aws</username>
+            <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
+        </server>
     </servers>
 
-    <!-- Configure the mirror for all repositories -->
-   
-    <!-- <mirrors>
-      <mirror>
-       <id>matson-central-store</id>
-       <name>matson-central-store</name>
-       <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central-store/</url>
-       <mirrorOf>*</mirrorOf>
-      </mirror>
-   </mirrors> -->
-<!-- 
     <profiles>
         <profile>
             <id>aws-codeartifact</id>
             <repositories>
                 <repository>
-                    <id>matson-maven-central-store</id>
-                    <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/maven-central-store/</url>
+                    <id>matson-central</id> <!-- Match the id used in your repositories -->
+                    <url>https://matson-891377353125.d.codeartifact.us-east-1.amazonaws.com/maven/central/</url>
                     <releases><enabled>true</enabled></releases>
                     <snapshots><enabled>true</enabled></snapshots>
                 </repository>
             </repositories>
         </profile>
-    </profiles> -->
+    </profiles>
 
-    <!-- <activeProfiles>
+    <activeProfiles>
         <activeProfile>aws-codeartifact</activeProfile>
-    </activeProfiles> -->
+    </activeProfiles>
 </settings>
-
-
-
-
-
