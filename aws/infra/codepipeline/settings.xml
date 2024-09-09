@@ -10,7 +10,7 @@
             <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
         </server>
         <server>
-            <id>matson-central-store</id>
+            <id>matson-cas-scheduler</id>
             <username>aws</username>
             <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
         </server>
