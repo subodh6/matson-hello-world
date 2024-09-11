@@ -19,7 +19,7 @@ phases:
       - yum install zip -y
       - pip install requests
       - pip install ruamel.yaml
-      - git clone --branch main https://github.com/subodh6/matson-hello-world.git
+      #- git clone --branch main https://github.com/subodh6/matson-hello-world.git
  
   build:
     commands:
