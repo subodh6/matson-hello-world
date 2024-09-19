@@ -1,35 +1,40 @@
 version: 0.2
 
+# env:
+#   variables:
+#     DO_STATIC_SCAN: "$doStaticScan"  # Using the variable passed from CodePipeline
+
 phases:
   install:
     commands:
-      - echo "Skipping yum update..."
+      - echo "Install phase started"
 
   pre_build:
     commands:
-      - echo "version controller"
-      - yum update -y
-      - yum install jq -y
-      - pip install requests
-      - pip install ruamel.yaml
-
+      - echo "Pre-build phase started"
+  
   build:
     commands:
-      # - cp -r aws/infra/DevSecOps/DAST/* .
-      # - cd Automation_scan/bin 
-      # - python3 main.py & PYTHON_PID=$!; tail -f ../log/scan_automation.log & TAIL_PID=$!; wait $PYTHON_PID; kill $TAIL_PID 
+      - echo ${doDASTScan}
+      - echo "${doDASTScan}"
       - |
-       if [ "$doDASTScan" = "Yes" ]; then
-       echo "Source artifact reference:$CODEBUILD_SOURCE_VERSION"
-       echo "automation for DAST Phase"
-       cp -r aws/infra/DevSecOps/DAST/* .
-       echo "Running DAST Scan..."
-       cd Automation_scan/bin 
-       python3 main.py & PYTHON_PID=$!; tail -f ../log/scan_automation.log & TAIL_PID=$!; wait $PYTHON_PID; kill $TAIL_PID 
-       else
-       echo "Skipping DAST and proceeding with Deploy"
-       fi
-
-  post_build:
-    commands:
-      - echo "DAST phase completed "
+        # Convert environment variable to lowercase for comparison
+        if [ "$(echo $doDASTScan | tr '[:upper:]' '[:lower:]')" = "yes" ]; then
+          echo "automation for DAST Phase"
+        else
+          echo "Skipping DAST and proceeding with Deploy"
+        fi
+ 
+#   post_build:
+#     commands:
+#       - echo "SAST/SCA phases completed"
+#       - echo "Post-build phase started"
+#       - cp target/hello-world-1.0.2.war .
+#       - mv hello-world-1.0.2.war hello-world.war
+#       - mkdir build_artifacts
+#       - cp hello-world.war buildspec-lab.yml buildspec-pp.yml appspec.yml application_start.sh build_artifacts/
+ 
+# artifacts:
+#   files:
+#     - '**/build_artifacts/*'
+#   discard-paths: yes
