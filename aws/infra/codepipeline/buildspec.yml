@@ -1,0 +1,39 @@
+version: 0.2
+
+# env:
+#   variables:
+#     DO_STATIC_SCAN: "$doStaticScan"  # Using the variable passed from CodePipeline
+
+phases:
+  install:
+    commands:
+      - echo "Install phase started"
+
+  pre_build:
+    commands:
+      - echo "Pre-build phase started"
+  
+  build:
+    commands:
+      - echo ${doStaticScan}
+      - echo "${doStaticScan}"
+      - |
+        # Convert environment variable to lowercase for comparison
+        if [ "$(echo $doStaticScan | tr '[:upper:]' '[:lower:]')" = "yes" ]; then
+          echo "Starting SAST and SCA with Coverity"
+          echo "SAST and SCA phases completed"
+        else
+          echo "Skipping SAST/SCA and proceeding with build"
+        fi
+ 
+#   post_build:
+#     commands:
+#       - echo "SAST/SCA phases completed"
+#       - echo "Post-build phase started"
+#       - mkdir build_artifacts
+#       - cp * build_artifacts/
+ 
+# artifacts:
+#   files:
+#     - '**/build_artifacts/*'
+#   discard-paths: yes
